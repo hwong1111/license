@@ -1,0 +1,78 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+export PATH
+
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# User specific aliases and functions
+if [ -d ~/.bashrc.d ]; then
+	for rc in ~/.bashrc.d/*; do
+		if [ -f "$rc" ]; then
+			. "$rc"
+		fi
+	done
+fi
+
+unset rc
+
+# export XILINXD_LICENSE_FILE=2100@localhost
+# source /data/local/tools/Xilinx/Vivado/2022.2/settings64.sh
+# export LD_LIBRARY_PATH=$XILINX_VIVADO/lib/lnx64.o
+
+export QUESTA_FSE=/home/hw/eda/intelFPGA_pro/24.3/questa_fse
+export MODELSIM_BIN_DIR=${QUESTA_FSE}/bin
+export MODEL_TECH=${QUESTA_FSE}/bin
+#export LM_LICENSE_FILE=/mnt/c/Users/hwong/OneDrive\ -\ DV\ Trading/Documents/License/LR-276178_License.dat
+export LM_LICENSE_FILE=$HOME/OneDrive-DV/Documents/License/LR-276178_License.dat
+
+export PATH=${MODEL_TECH}:$PATH
+
+[ -s "/home/hw/.scm_breeze/scm_breeze.sh" ] && source "/home/hw/.scm_breeze/scm_breeze.sh"
+
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias cls='clear'
+alias hwenv='source /home/hw/ctbsim-env/bin/activate'
+
+export EDITOR='vim'
+export VISUAL='vim'
+export PAGER='less'
+export LESS='-R'
+export HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+export PROMPT_COMMAND
+
+PS1='\[\e[0;32m\]\u@\h \[\e[0;34m\]\w\[\e[0m\]\$ '
+export PS1
+
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM="auto"
+# source /usr/share/git/completion/git-prompt.sh
+
+# Locate and source the git-prompt.sh script
+# The path may vary slightly by distribution; this is a common location.
+if [ -f /usr/lib/git-core/git-sh-prompt ]; then
+    source /usr/lib/git-core/git-sh-prompt
+elif [ -f /etc/bash_completion.d/git-prompt ]; then
+    source /etc/bash_completion.d/git-prompt
+elif [ -f ~/.git-prompt.sh ]; then
+    source ~/.git-prompt.sh
+fi
+
+#PS1='\[\e[0;32m\]\u@\h \[\e[0;34m\]\w\[\e[0;33m\]$(__git_ps1 " (%s)")\[\e[0m\]\$ '
+#export PS1
